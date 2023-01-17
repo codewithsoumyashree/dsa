@@ -1,54 +1,71 @@
+//creation of link list
 #include <stdio.h>
 #include <stdlib.h>
-struct dnode
+struct Node
 {
-    struct dnode *prev;
     int info;
-    struct dnode *next;
+    struct Node *link;
 };
-void addtoendlist(struct dnode *start,int data);
-void addtoemptylist(struct dnode *start, int data);
-void create_list(struct dnode *start)
+struct Node *start=NULL;
+void create_list(int data)
 {
-    int i,n,data;
-    printf("nodes?");
-    scanf("%d",&n);
-    printf("enter 1st data ");
-    scanf("%d",&data);
-    addtoemptylist(start,data);
-    for(i=2;i<=n;i++)
+    struct Node *temp;
+    struct Node *q;
+    temp=(struct Node*)malloc(sizeof(struct Node));
+    temp->info=data;
+    temp->link=NULL;
+    if(start==NULL)
     {
-        printf("enter %d data:",i);
-        scanf("%d",&data);
-        addtoendlist(start,data);
+        start=temp;
+    }
+    else
+    {
+        q=start;
+        while(q->link!=NULL)
+        {
+            q=q->link;
+        }
+        q->link=temp;
     }
 }
-void addtoemptylist(struct dnode *start, int data)
+void display()
 {
-    struct dnode *temp, *p;
-    temp=(struct dnode*)malloc(sizeof(struct dnode));
-    temp->info=data;
-    temp->prev=NULL;
-    temp->next=NULL;
-}
-
-void addtoendlist(struct dnode *start,int data)
-{
-    struct dnode *temp, *pqr;
-    temp=(struct dnode*)malloc(sizeof(struct dnode));
-    temp->info=data;
-    pqr=start;
-    while(pqr->next!=NULL)
+    struct Node *q;
+    if(start==NULL)
     {
-        pqr=pqr->next;
+        printf("NO LINK LIST IS BEING CREATED\n");
     }
-    pqr->next=temp;
-    temp->prev=pqr;
-    temp->next=NULL;
+    q=start;
+    while(q!=NULL)
+    {
+        printf("%d\n",q->info);
+        q=q->link;
+    }
 }
-
+void circular(struct Node *start)
+{
+    struct Node *trav;
+    trav=start;
+    while(trav->link!=NULL)
+    {
+        trav=trav->link;
+    }
+    trav->link=start;
+}
 int main()
 {
-    struct dnode *start=NULL;
-    create_list(start);
+    int n,data;
+    printf("ENTER THE NUMBER OF NODES:");
+    scanf("%d",&n);
+    for(int i=0;i<n;i++)
+    {
+        printf("enter the NODE info");
+        scanf("%d",&data);
+        create_list(data);
+    }
+    display();
+    printf("temp->link="
+    circular(start);
+    printf("start is now",start);
+    return 0;
 }
